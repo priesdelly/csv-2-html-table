@@ -10,16 +10,30 @@ function getFile(event) {
 function placeFileContent(target, file) {
   readFileContent(file)
     .then((content) => {
-      var line = content.split("\n");
-      var html = '';
-      for (var i = 0; i < line.length; i++) {
-        if (i === 0) {
-          
-        }
-      }
-      console.log(line);
+      let html = "<table>\n";
+      let rows = content.split("\n");
 
-      target.value = content;
+      rows.forEach((row, rowNo) => {
+       
+        row = row.replace(/(?:\r\n|\r|\n)/g, '');
+
+        html += "  <tr>\n";
+        let columns = row.split(",");
+        columns.forEach((col, colNo) => {
+         
+          if (rowNo === 0) {
+            html += `    <th>${col}</th>\n`;
+          } else {
+            html += `    <td>${col}</td>\n`;
+          }
+
+        });
+
+        html += "  </tr>\n";
+      });
+
+      // target.value = content;
+      target.value = html;
     })
     .catch((error) => console.log(error));
 }
