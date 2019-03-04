@@ -7,39 +7,6 @@ function getFile(event) {
   }
 }
 
-function placeFileContent(target, file) {
-  readFileContent(file)
-    .then((content) => {
-      let html = `<table align="center" border="1" cellpadding="6" cellspacing="0">\n`;
-      let rows = content.split("\n");
-
-      rows.forEach((row, rowNo) => {
-        row = row.replace(/(?:\r\n|\r|\n)/g, "");
-
-        if (rowNo === 0) {
-          html += `  <tr height="24" style="height: 24px; text-align: center; color:#006400;font-weight: bold;">\n`;
-        } else {
-          html += `  <tr height="24" style="height: 24px;">\n`;
-        }       
-
-        let columns = row.split(",");
-        columns.forEach((col, colNo) => {
-          if (rowNo === 0) {
-            html += `    <th>${col}</th>\n`;
-          } else {
-            html += `    <td>${col}</td>\n`;
-          }
-        });
-
-        html += "  </tr>\n";
-      });
-
-      // target.value = content;
-      target.value = html;
-    })
-    .catch((error) => console.log(error));
-}
-
 function readFileContent(file) {
   const reader = new FileReader();
   return new Promise((resolve, reject) => {
@@ -48,3 +15,47 @@ function readFileContent(file) {
     reader.readAsText(file);
   });
 }
+
+function placeFileContent(target, file) {
+  readFileContent(file)
+    .then((content) => {
+      let html = `<table align="center" border="1" cellpadding="6" cellspacing="0">\n`;
+      let rows = content.split("\n");
+
+      rows.forEach((row, rowNo) => {
+        if (row === "") {
+          return;
+        }
+        row = row.replace(/(?:\r\n|\r|\n)/g, "");
+
+        if (rowNo === 0) {
+          html += `  <tr height="24" style="height: 24px; text-align: center; color:#006400;">\n`;
+        } else {
+          html += `  <tr height="24" style="height: 24px;">\n`;
+        }       
+
+        let columns = row.split(",");
+        columns.forEach((col, colNo) => {
+
+          col = col.replace(/(?:\r\n|\r|\n)/g, "");
+          col = col.replace(/(?:")/g, "")
+
+          if (rowNo === 0) {
+            html += `    <th><strong>${col}<strong></th>\n`;
+          } else {
+            html += `    <td>${col}</td>\n`;
+          }
+        });
+
+        html += "  </tr>\n";
+      });
+
+      html += `</table>\n`;
+
+      // target.value = content;
+      target.value = html;
+    })
+    .catch((error) => console.log(error));
+}
+
+
