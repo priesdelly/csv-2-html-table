@@ -10,23 +10,21 @@ function getFile(event) {
 function placeFileContent(target, file) {
   readFileContent(file)
     .then((content) => {
-      let html = "<table>\n";
+      let html = `<table  align="center" border="1" cellpadding="6" cellspacing="0">\n`;
       let rows = content.split("\n");
 
       rows.forEach((row, rowNo) => {
-       
-        row = row.replace(/(?:\r\n|\r|\n)/g, '');
+        row = row.replace(/(?:\r\n|\r|\n)/g, "");
 
-        html += "  <tr>\n";
         let columns = row.split(",");
         columns.forEach((col, colNo) => {
-         
           if (rowNo === 0) {
+            html += `  <tr height="24" style="height: 24px; text-align: center; color:#006400;font-weight: bold;">\n`;
             html += `    <th>${col}</th>\n`;
           } else {
+            html += `  <tr height="24" style="height: 24px;">\n`;
             html += `    <td>${col}</td>\n`;
           }
-
         });
 
         html += "  </tr>\n";
