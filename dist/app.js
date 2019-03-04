@@ -12,17 +12,22 @@ function getFile(event) {
 
 function placeFileContent(target, file) {
   readFileContent(file).then(function (content) {
-    var html = "<table  align=\"center\" border=\"1\" cellpadding=\"6\" cellspacing=\"0\">\n";
+    var html = "<table align=\"center\" border=\"1\" cellpadding=\"6\" cellspacing=\"0\">\n";
     var rows = content.split("\n");
     rows.forEach(function (row, rowNo) {
       row = row.replace(/(?:\r\n|\r|\n)/g, "");
+
+      if (rowNo === 0) {
+        html += "  <tr height=\"24\" style=\"height: 24px; text-align: center; color:#006400;font-weight: bold;\">\n";
+      } else {
+        html += "  <tr height=\"24\" style=\"height: 24px;\">\n";
+      }
+
       var columns = row.split(",");
       columns.forEach(function (col, colNo) {
         if (rowNo === 0) {
-          html += "  <tr height=\"24\" style=\"height: 24px; text-align: center; color:#006400;font-weight: bold;\">\n";
           html += "    <th>".concat(col, "</th>\n");
         } else {
-          html += "  <tr height=\"24\" style=\"height:24px;\">\n";
           html += "    <td>".concat(col, "</td>\n");
         }
       });
