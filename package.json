@@ -17,11 +17,11 @@
   },
   "homepage": "https://github.com/priesdelly/csv-2-html-table#readme",
   "devDependencies": {
-    "@babel/core": "^7.3.4",
-    "@babel/preset-env": "^7.3.4",
-    "@babel/register": "^7.0.0",
-    "gulp": "^4.0.0",
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/register": "^7.9.0",
+    "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
-    "gulp-uglify": "^3.0.1"
+    "gulp-uglify": "^3.0.2"
   }
 }
