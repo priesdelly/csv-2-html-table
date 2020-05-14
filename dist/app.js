@@ -46,6 +46,11 @@ function placeFileContent(target, file) {
       columns.forEach(function (col, colNo) {
         col = col.replace(/(?:\r\n|\r|\n)/g, "");
         col = col.replace(/(?:")/g, "");
+        col = col.trim();
+
+        if (validURL(col)) {
+          col = "<a href=\"".concat(col, "\">").concat(col, "</a>");
+        }
 
         if (rowNo === 0) {
           html += "    <th><strong>".concat(col, "<strong></th>\n");
@@ -58,7 +63,12 @@ function placeFileContent(target, file) {
     html += "</table>\n"; // target.value = content;
 
     target.value = html;
-  }).catch(function (error) {
+  })["catch"](function (error) {
     return console.log(error);
   });
+}
+
+function validURL(str) {
+  var pattern = new RegExp('^(https?:\\/\\/)?' + '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + '((\\d{1,3}\\.){3}\\d{1,3}))' + '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + '(\\?[;&a-z\\d%_.~+=-]*)?' + '(\\#[-a-z\\d_]*)?$', 'i');
+  return !!pattern.test(str);
 }

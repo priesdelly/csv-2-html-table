@@ -39,6 +39,11 @@ function placeFileContent(target, file) {
 
           col = col.replace(/(?:\r\n|\r|\n)/g, "");
           col = col.replace(/(?:")/g, "")
+          col = col.trim();
+          
+          if (validURL(col)) {
+            col = `<a href="${col}">${col}</a>`;
+          }
 
           if (rowNo === 0) {
             html += `    <th><strong>${col}<strong></th>\n`;
@@ -58,4 +63,12 @@ function placeFileContent(target, file) {
     .catch((error) => console.log(error));
 }
 
-
+function validURL(str) {
+  var pattern = new RegExp('^(https?:\\/\\/)?'+
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ 
+    '((\\d{1,3}\\.){3}\\d{1,3}))'+
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+
+    '(\\?[;&a-z\\d%_.~+=-]*)?'+
+    '(\\#[-a-z\\d_]*)?$','i');
+  return !!pattern.test(str);
+}
